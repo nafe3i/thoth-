@@ -15,31 +15,25 @@ class Router {
     }
 
     public function dispatch($uri, $method) {
-        // Nettoyer l'URI mais garder le slash pour la racine
         if ($uri !== '/') {
             $uri = rtrim($uri, '/');
         }
         
         if (!isset($this->routes[$method][$uri])) {
-            // Route non trouvée - page 404 simple
             http_response_code(404);
             echo "<h1>404 - Page not found</h1>";
             exit;
         }
 
-        // Extraire le contrôleur et la méthode
         $controllerAction = $this->routes[$method][$uri];
         list($controllerName, $methodName) = explode('@', $controllerAction);
         
-        // Inclure le fichier du contrôleur
         $controllerFile = __DIR__ . '/../controllers/' . $controllerName . '.php';
         if (file_exists($controllerFile)) {
             require_once $controllerFile;
             
-            // Créer une instance du contrôleur
             $controller = new $controllerName();
             
-            // Appeler la méthode
             if (method_exists($controller, $methodName)) {
                 $controller->$methodName();
             } else {

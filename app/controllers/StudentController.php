@@ -51,7 +51,6 @@ class StudentController extends Controller {
         }
     }
     
-    // Page d'inscription
     public function register() {
         if (Auth::isLoggedIn()) {
             $this->redirect('/student/dashboard');
@@ -84,7 +83,6 @@ class StudentController extends Controller {
                 $errors[] = "Les mots de passe ne correspondent pas";
             }
             
-            // Vérifier si l'email existe déjà
             if (empty($errors)) {
                 $studentModel = new Student();
                 if ($studentModel->emailExists($email)) {
@@ -107,7 +105,6 @@ class StudentController extends Controller {
         }
     }
     
-    // Dashboard étudiant
     public function dashboard() {
         Auth::protect();
         
@@ -128,7 +125,6 @@ class StudentController extends Controller {
         ]);
     }
     
-    // Détails d'un cours
     public function course() {
         Auth::protect();
         
@@ -157,7 +153,6 @@ class StudentController extends Controller {
         ]);
     }
     
-    // S'inscrire à un cours
     public function enroll() {
         Auth::protect();
         
@@ -177,7 +172,6 @@ class StudentController extends Controller {
         $this->redirect('/student/dashboard');
     }
     
-    // Déconnexion
     public function logout() {
         Auth::logout();
         $this->redirect('/login');

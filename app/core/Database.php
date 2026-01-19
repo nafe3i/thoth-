@@ -5,7 +5,6 @@ class Database {
     private $pdo;
 
     private function __construct() {
-        // Charger la configuration
         require_once __DIR__ . '/../../config/database.php';
         
         try {
@@ -24,7 +23,6 @@ class Database {
         }
     }
 
-    // Singleton pattern
     public static function getInstance() {
         if (self::$instance === null) {
             self::$instance = new self();
@@ -32,14 +30,9 @@ class Database {
         return self::$instance;
     }
 
-    // Obtenir l'objet PDO
     public function getConnection() {
         return $this->pdo;
     }
 
-    // Empêcher le clonage
-    // private function __clone() {}
 
-    // // Empêcher la désérialisation
-    // public function __wakeup() {}
 }
